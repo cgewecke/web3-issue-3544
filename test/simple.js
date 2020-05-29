@@ -7,6 +7,10 @@ const web3 = new Web3();
 const abi = web3.eth.abi;
 const isAddress = web3.utils.isAddress;
 
+//
+// Source:
+// aragon/contract-helpers/test-helpers/events.js
+//
 const decodeEvents = ( receipt, contractAbi, eventName) => {
   const eventAbi = contractAbi.filter(abi => abi.name === eventName && abi.type === 'event')[0]
   const eventSignature = abi.encodeEventSignature(eventAbi)
@@ -38,6 +42,5 @@ contract('Simple', function(accounts){
     const r = await simple.fireEvent('0xabe985cb');
 
     decodeEvents( r.receipt, Simple.abi, 'lockCallback');
-
   })
 })
