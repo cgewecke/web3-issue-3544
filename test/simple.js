@@ -35,11 +35,20 @@ const decodeEvents = ( receipt, contractAbi, eventName) => {
 
 contract('Simple', function(accounts){
 
-  it('fires', async function(){
+  it('fires public event', async function(){
     console.log('web3 version: ' + web3.version);
 
     const simple = await Simple.new();
-    const r = await simple.fireEvent('0xabe985cb');
+    const r = await simple.public_fireEvent('0xabe985cb');
+
+    decodeEvents( r.receipt, Simple.abi, 'lockCallback');
+  })
+
+  it('fires external event', async function(){
+    console.log('web3 version: ' + web3.version);
+
+    const simple = await Simple.new();
+    const r = await simple.external_fireEvent('0xabe985cb');
 
     decodeEvents( r.receipt, Simple.abi, 'lockCallback');
   })
